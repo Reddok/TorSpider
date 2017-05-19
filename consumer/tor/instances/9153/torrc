@@ -1,5 +1,0 @@
-ControlPort 9153
-SocksPort 9053
-ExitNodes {ru},{ua},{by},{kz}
-DataDirectory ../instances/9153/data
-HashedControlPassword 16:7306F3AC283F5AD460119CF3F45CAFB627E0800418C521FEFEE1416163

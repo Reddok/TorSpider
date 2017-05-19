@@ -1,5 +1,0 @@
-ControlPort 3100
-SocksPort 3200
-ExitNodes {ru},{ua},{by},{kz}
-DataDirectory ../instances/3100/data
-HashedControlPassword 16:7306F3AC283F5AD460119CF3F45CAFB627E0800418C521FEFEE1416163
