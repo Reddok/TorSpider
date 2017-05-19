@@ -1,0 +1,34 @@
+input.number-field{
+  text-align: right;
+  padding-right: @buttonWidth + 10;
+}
+.input-controls {
+  font-size: @iconSize;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border: @inputBorder;
+  border-top-right-radius: @inputRadius;
+  border-bottom-right-radius: @inputRadius;
+}
+.input-increase, .input-decrease{
+  display: block;
+  cursor: pointer;
+  height: @buttonHeight;
+  width: @buttonWidth;
+  text-align: center;
+  background: rgb(255,255,255); /* Old browsers */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  &:active{
+    background: rgb(229,229,229); /* Old browsers */
+    background: linear-gradient(to bottom,  rgba(229,229,229,1) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  }
+}
+.input-increase{
+  border-bottom: @inputBorder;
+  height: @buttonHeight + 1;
+  border-top-right-radius: @inputRadius;
+}
+.input-decrease{
+  border-bottom-right-radius: @inputRadius;
+}

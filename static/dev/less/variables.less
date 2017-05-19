@@ -1,0 +1,47 @@
+@componentBg: papayawhip;
+@componentShadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.3);
+@componentBorder: 2px solid #bbb;
+@transitionTime: .3s;
+@inputSize: 45px;
+@inputRadius: 5px;
+@inputBorder: 1px solid #ccc;
+@iconSize: 16px;
+@buttonHeight: floor(@inputSize / 2) - 1;
+@buttonWidth: ceil(0.8 * @inputSize);
+@row-size: 32px;
+@buttonColor: #286090;
+
+
+.formElemShadow(@color){
+  box-shadow: 0px 0px 12px -2px @color;
+}
+
+.linkGradient(@top, @bot, @time){
+  background: @top; /* Old browsers */
+  background: -moz-linear-gradient(top,  @top 0%, @bot 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(top,  @top 0%,@bot 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom,  @top 0%,@bot 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  position: relative;
+  z-index: 100;
+  &:before{
+    border-radius: inherit;
+    background: @bot; /* Old browsers */
+    background: -moz-linear-gradient(top,  @bot 0%, @top 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  @bot 0%,@top 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  @bot 0%,@top 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0;
+    width: 100%;
+    z-index: -100;
+    transition: opacity @time;
+  }
+  &:hover {
+    &:before {
+      opacity: 1;
+    }
+  }
+}

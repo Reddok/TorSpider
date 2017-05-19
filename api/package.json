@@ -1,0 +1,22 @@
+{
+  "name": "tor_spider_service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js config_request_queue 192.168.33.10"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-cors": "0.0.16",
+    "koa-logger": "^2.0.1",
+    "koa-static": "^3.0.0",
+    "koa-views": "^6.0.1",
+    "node-uuid": "^1.4.8"
+  }
+}

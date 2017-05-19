@@ -1,0 +1,21 @@
+# Tor state file last generated on 2017-03-27 21:45:41 local time
+# Other times below are in UTC
+# You *do not* need to edit this file.
+
+EntryGuard modupe 3CE90527D5712296B58E7EB7CD57F7D388D25FBB DirCache
+EntryGuardAddedBy 3CE90527D5712296B58E7EB7CD57F7D388D25FBB 0.2.9.9 2017-02-26 05:38:11
+EntryGuardPathBias 22.000000 22.000000 22.000000 0.000000 0.000000 0.000000
+EntryGuard jaures2 A4C98CEA3F34E05299417E9F885A642C88EF6029 DirCache
+EntryGuardAddedBy A4C98CEA3F34E05299417E9F885A642C88EF6029 0.2.9.9 2017-03-13 14:49:36
+EntryGuard dragonfly 5CBD45394573828291C8FE9780232FDFD0D202DF DirCache
+EntryGuardAddedBy 5CBD45394573828291C8FE9780232FDFD0D202DF 0.2.9.9 2017-02-25 19:31:30
+TorVersion Tor 0.2.9.9 (git-56788a2489127072)
+LastWritten 2017-03-27 17:45:41
+TotalBuildTimes 22
+CircuitBuildTimeBin 325 4
+CircuitBuildTimeBin 375 4
+CircuitBuildTimeBin 425 3
+CircuitBuildTimeBin 475 2
+CircuitBuildTimeBin 525 4
+CircuitBuildTimeBin 625 4
+CircuitBuildTimeBin 1375 1

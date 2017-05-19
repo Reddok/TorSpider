@@ -1,0 +1,22 @@
+.form-component, .form-elem-container{
+  position: relative;
+}
+input[type=text], input[type=number], input[type=email], select, textarea{
+  width: 100%;
+  height: @inputSize;
+  padding: 10px 15px;
+  border: @inputBorder;
+  border-radius: @inputRadius;
+  outline: none;
+  transition: all @transitionTime;
+  &:focus{
+    .formElemShadow(#194AFF);
+  }
+  &.has-error{
+    .formElemShadow(red);
+  }
+}
+
+input[type=number]{
+  text-align: right;
+}

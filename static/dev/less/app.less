@@ -1,0 +1,45 @@
+@import "variables.less";
+
+/*Styles*/
+html, body, #page, #page > div{
+  height: 100%;
+}
+#page {
+  background-color: #F2F2F2;
+  position: relative;
+}
+main {
+  min-height: 100%;
+  padding-bottom:100px;
+  padding-top: 70px;
+  max-width: 1214px;
+  min-width: 480px;
+  background: #fff;
+  border: 1px solid #ddd;
+  margin: 0 auto;
+}
+h1{
+  margin-bottom: 40px;
+  padding: 5px 30px;
+  background: @componentBg;
+  box-shadow: @componentShadow
+}
+ul{
+  padding: 0;
+  list-style-type: none;
+}
+a{
+  transition: color @transitionTime;
+}
+
+.form-error{
+  margin-top: 15px;
+}
+/*Styles end*/
+@import "header.less";
+@import "footer.less";
+@import "formElem.less";
+@import "number.less";
+@import "loader.less";
+@import "list.less";
+@import "edit.less";

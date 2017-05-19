@@ -1,0 +1,23 @@
+{
+  "name": "config",
+  "version": "1.0.0",
+  "description": "Config server for tor spider",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "deep-diff": "^0.3.4",
+    "http-proxy": "^1.16.2",
+    "koa": "^2.2.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-logger": "^2.0.1",
+    "koa-router": "^7.1.1",
+    "nconf": "^0.8.4",
+    "node-uuid": "^1.4.8"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "amqp": {
+      "address": "192.168.33.10",
+      "user": "guest",
+      "password": "guest",
+      "port": ""
+  },
+
+  "config": {
+    "exchanges": {
+      "changes": "config_changes_exchange"
+    },
+    "queues": {
+      "request" : "config_request_queue",
+      "changes" : "config_changes_queue"
+    }
+  },
+
+  "process": {
+    "queues": {
+        "task": "task_queue"
+    }
+  },
+
+  "service": {
+    "queues": {
+      "notify": "notify_queue"
+    },
+    "address": "localhost",
+    "port": 8000
+  },
+
+  "static": {
+    "address": "localhost",
+    "port" : 3000
+  },
+
+  "databases": {
+    "mongo": {
+      "name": "mongodb://localhost/spider",
+      "options": {
+        "server": {
+          "poolSize": 20,
+          "socketOptions": {
+            "keepAlive": 30000,
+            "connectTimeoutMS": 30000,
+            "auto_reconnect": true
+          },
+          "auto_reconnect": true
+        },
+        "replset": {
+          "socketOptions": {
+            "keepAlive": 300000,
+            "connectTimeoutMS": 30000
+          }
+        }
+      }
+    },
+    "redis": {
+        "options": {
+          "host": "192.168.33.10",
+          "port": 6379
+        }
+    }
+  }
+}

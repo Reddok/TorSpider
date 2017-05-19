@@ -1,0 +1,46 @@
+
+
+.button-set{
+  button{
+    margin-right: 5px;
+    &:last-child{
+      margin-right: 0;
+    }
+  }
+}
+.referer-list li{
+  position: relative;
+  height: 45px;
+  margin-bottom: 10px;
+  background-color: @buttonColor;
+  color: #fff;
+  font-weight: bold;
+  line-height: 43px;
+  padding: 0 15px;
+  border: 1px solid @buttonColor;
+  border-radius: @inputRadius;
+  transition: all @transitionTime;
+  .remove-button{
+    position: absolute;
+    right: 10px;
+    opacity: 0;
+    transition: all @transitionTime;
+    background: @buttonColor;
+    color: #fff;
+    padding: 5px;
+    top: 8px;
+    line-height: 1;
+    border: none;
+    border-radius: 15px;
+  }
+  &:hover{
+    background-color: #fff;
+    color: @buttonColor;
+    .remove-button{
+      opacity: 1;
+    }
+  }
+}
+.add-referer{
+  margin-top: 10px;
+}

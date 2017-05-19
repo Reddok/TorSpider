@@ -1,0 +1,42 @@
+
+
+.list-wrap{
+  clear: both;
+  border: @componentBorder;
+  height: 500px;
+  overflow: auto;
+  background: @componentBg;
+  margin-top: 20px;
+}
+.create-link{
+  display: inline-block;
+  margin-top: 50px;
+}
+a.site-link {
+  font-size: 16px;
+  font-weight: bold;
+  display: block;
+  padding: 10px 0;
+  border-bottom: @componentBorder;
+  text-decoration: none;
+  .linkGradient(#d1d1d1, #eaeaea, @transitionTime);
+}
+.site-name, .site-state{
+  display: inline-block;
+  vertical-align: top;
+}
+.site-state{
+  display: inline-block;
+  width: @row-size;
+  height: @row-size;
+  margin: 0 15px;
+  &.started{
+    background-image: url(../images/bullet_green.png);
+  }
+  &.stopped{
+    background-image: url(../images/bullet_red.png);;
+  }
+}
+.site-name{
+  line-height: @row-size;
+}

@@ -1,0 +1,22 @@
+{
+  "name": "tor_spider_consumer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js config_request_queue"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "cheerio": "^0.22.0",
+    "copy-dir": "^0.3.0",
+    "mkdirp": "^0.5.1",
+    "node-uuid": "^1.4.8",
+    "portfinder": "^1.0.13",
+    "redis": "^2.7.1",
+    "request": "^2.81.0"
+  }
+}

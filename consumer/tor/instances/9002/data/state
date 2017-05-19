@@ -1,0 +1,32 @@
+# Tor state file last generated on 2017-05-15 03:36:35 local time
+# Other times below are in UTC
+# You *do not* need to edit this file.
+
+EntryGuard PonTor 9F1FA6BA0C2033320D02B34BE069764F267411D9 DirCache
+EntryGuardAddedBy 9F1FA6BA0C2033320D02B34BE069764F267411D9 0.2.9.9 2017-05-11 21:29:54
+EntryGuardPathBias 31.000000 31.000000 31.000000 0.000000 0.000000 0.000000
+EntryGuard KaarliVPS 537DFC2019C77FF60A0A29BEF358F7F6D6C68688 DirCache
+EntryGuardAddedBy 537DFC2019C77FF60A0A29BEF358F7F6D6C68688 0.2.9.9 2017-05-02 01:19:42
+EntryGuard fs0ciety D01CD0697CE73C12DA8AB12892F8379E0289F488 DirCache
+EntryGuardAddedBy D01CD0697CE73C12DA8AB12892F8379E0289F488 0.2.9.9 2017-04-27 18:36:15
+TorVersion Tor 0.2.9.9 (git-56788a2489127072)
+LastWritten 2017-05-14 23:36:35
+TotalBuildTimes 31
+CircuitBuildTimeBin 375 1
+CircuitBuildTimeBin 425 8
+CircuitBuildTimeBin 475 1
+CircuitBuildTimeBin 525 2
+CircuitBuildTimeBin 575 3
+CircuitBuildTimeBin 675 1
+CircuitBuildTimeBin 725 1
+CircuitBuildTimeBin 775 2
+CircuitBuildTimeBin 825 2
+CircuitBuildTimeBin 875 1
+CircuitBuildTimeBin 975 1
+CircuitBuildTimeBin 1025 1
+CircuitBuildTimeBin 1075 2
+CircuitBuildTimeBin 1225 1
+CircuitBuildTimeBin 1575 1
+CircuitBuildTimeBin 1675 1
+CircuitBuildTimeBin 1775 1
+CircuitBuildTimeBin 2075 1
