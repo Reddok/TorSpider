@@ -31,7 +31,7 @@ app.listen(port, (err) => {
     if(err) console.error(err);
     else {
         console.log("Developing server successfully started on port", port);
-        process.send({type: 'Start'});
+        process.send && process.send({type: 'Start'});
     }
 
 });

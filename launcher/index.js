@@ -6,8 +6,6 @@ let fork = require('child_process').fork,
     formatDate = require('./libs/date'),
     children = [];
 
-console.log(process.cwd());
-
     Promise.resolve()
         .then(startConfig)
         .then(startApi)
@@ -71,7 +69,10 @@ function startService(path, name, args = [], options = {}) {
         children.push(child);
 
         child.once('message', data => {
-            if(data.type === 'Start') res();
+            if(data.type === 'Start') {
+                console.log(name + ' starting successfully');
+                res();
+            }
         });
 
         child.once('exit', () => {

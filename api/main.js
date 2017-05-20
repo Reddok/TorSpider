@@ -28,7 +28,7 @@ const amqp = require('amqplib'),
         .then(createApp)
         .then( () => {
             console.log("started successful");
-            process.send({type: 'Start'});
+            process.send && process.send({type: 'Start'});
         });
 
 function createApp() {

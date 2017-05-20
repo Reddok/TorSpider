@@ -6,4 +6,4 @@ const emitter = new (require('events').EventEmitter)(),
 let config = ConfigFactory(emitter);
 ServerFactory(emitter, config);
 
-process.send({type: 'Start'});
+process.send && process.send({type: 'Start'});
