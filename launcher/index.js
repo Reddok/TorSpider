@@ -20,6 +20,7 @@ let fork = require('child_process').fork,
         })
         .catch( err => {
             console.log('Launching failed. Error: ', err);
+            process.exit(1);
         });
 
 

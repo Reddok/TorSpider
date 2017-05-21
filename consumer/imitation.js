@@ -1,18 +1,17 @@
 const cheerio = require("cheerio"),
     {shiftValue, random, getUrlsFromElems} = require("./libs/utils"),
     getStrategies = require('./libs/abyssStrategies'),
-    Error = require('./libs/error'),
-    User = require('./user');
+    Error = require('./libs/error');
 
-module.exports = (options, torOptions) => {
+module.exports =  (userClass, options, torOptions) => {
 
         return Promise.resolve()
-            .then(init.bind(null, options, torOptions))
+            .then(init.bind(null, userClass, options, torOptions))
             .then(user => request(user, options));
 
 };
 
-function init(options, torOptions) {
+function init(User, options, torOptions) {
 
     let currentLocation,
         counterStrategies;
@@ -64,7 +63,6 @@ function request(user, options, currentDeepLevel=1) {
             }
 
         )
-
 
 }
 

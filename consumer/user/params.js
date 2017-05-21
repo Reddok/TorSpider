@@ -1,6 +1,6 @@
 const {random} = require("../libs/utils"),
     useragent = require("random-useragent"),
-    Redis = require('redis')
+    Redis = require('redis');
 
 const listScreens =  [
     {width: 1440, height: 900},
@@ -32,10 +32,8 @@ const listLanguages = [
 
 module.exports = (redisOptions) => {
 
-    const redis = Redis.createClient({host: '192.168.33.10', port: 6379}),
+    const redis = Redis.createClient(redisOptions),
         month = 60 * 60 * 24 * 30;
-
-
 
     redis.on('ready', () => {
         console.log("REDIS CONNECTED AND READY TO WORK");
@@ -49,7 +47,7 @@ module.exports = (redisOptions) => {
 
                 if(err) return rej(new Error(`Redis replied with error when get user: ${err.message}`));
 
-                /*if(!config) {*/
+                if(!config) {
 
                     config = {
                         ip,
@@ -58,14 +56,14 @@ module.exports = (redisOptions) => {
                         language: listLanguages[random(0, listLanguages.length - 1)]
                     };
 
-                   /* redis.set(ip, JSON.stringify(config), 'EX', month, (err) => {
-                        if(err) return rej(new Error(`Redis replied with error when set user: ${err.message}`));*/
+                   redis.set(ip, JSON.stringify(config), 'EX', month, (err) => {
+                        if(err) return rej(new Error(`Redis replied with error when set user: ${err.message}`));
                         res(config);
-                    /*});*/
+                    });
 
-                /*} else {
+                } else {
                     res(JSON.parse(config));
-                }*/
+                }
 
             });
 
@@ -73,5 +71,5 @@ module.exports = (redisOptions) => {
 
     };
 
-}
+};
 

@@ -6,6 +6,11 @@
       "port": ""
   },
 
+  "tor": {
+      "password": "kunk2a",
+      "hashedPassword": "16:6A3B9F0DEA0CA369600C8DCE894FA7BAC2AC09FF3D80647B08927F7B51"
+  },
+
   "config": {
     "exchanges": {
       "changes": "config_changes_exchange"

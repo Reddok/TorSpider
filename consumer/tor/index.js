@@ -15,8 +15,9 @@ function createTor (options) {
     let torProcess;
 
     try{
-        fs.access(instancePath, fs.constants.F_OK);
+        fs.accessSync(instancePath, fs.constants.F_OK);
     } catch(err) {
+        console.log('Create new instance for path', instancePath);
         createInstance(instancePath, options);
     }
 
@@ -49,14 +50,14 @@ function createInstance(instancePath, options) {
 }
 
 function createConfig(options) {
-    let {controlPort, socksPort, countries=['ru', 'ua', 'by', 'kz']} = options,
+    let {controlPort, socksPort, countries=['ru', 'ua', 'by', 'kz'], hashedPassword} = options,
         base = '';
 
     base += `ControlPort ${controlPort}\r\n`;
     base += `SocksPort ${socksPort}\r\n`;
     base += `ExitNodes ${countries.map(c => `{${c}}`).join(',')}\r\n`;
     base += `DataDirectory ../instances/${controlPort}/data\r\n`;
-    base += 'HashedControlPassword 16:7306F3AC283F5AD460119CF3F45CAFB627E0800418C521FEFEE1416163';
+    base += `HashedControlPassword ${hashedPassword}`;
 
     return base;
 }

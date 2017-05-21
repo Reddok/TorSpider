@@ -4,8 +4,9 @@ const amqp = require('amqplib'),
     createTorClient = require('./tor'),
     Error = require('./libs/error'),
     Config = require('./libs/config'),
+    UserClassFactory = require('./user'),
     request = require('request'),
-    [, , configQueue, address = '192.168.33.10', torPassword = 'kunk2a', user = 'guest', password = 'guest', port = '5672'] = process.argv;
+    [, , configQueue, address = '192.168.33.10', user = 'guest', password = 'guest', port = '5672'] = process.argv;
 
 /*Створюється ланцюг. Кожен запит буде попадати в нього і виконуватись послідовно*/
 let chain = Promise.resolve(),
@@ -13,14 +14,15 @@ let chain = Promise.resolve(),
     processQueue,
     controlPort,
     socksPort,
-    channel;
+    channel,
+    config;
 
 
 portfinder.basePort = 9000;
 
     Promise.resolve()
-        .then(startTor)
         .then(systemInit.bind(null, {user, password, address, port}))
+        .then(startTor)
         .then(start)
         .then( () => {
             process.send && process.send({type: 'Start'});
@@ -38,26 +40,16 @@ function startTor() {
 
 
     return Promise.resolve()
-        .then(() => {
-            var ports = [];
-
-            return getFreePort()
-                .then( port => {
-                    ports.push(port);
-                    return getFreePort();
-                })
-                .then( port => {
-                    ports.push(port);
-                    return ports;
-                })
-
-        })
+        .then(getFreePorts.bind(null, 2))
         .then(ports => {
-            controlPort = ports[0];
-            socksPort = ports[1];
+            socksPort = ports[0];
+            controlPort = ports[1];
 
-            console.log('Start tor...', ports);
-            return createTorClient({controlPort, socksPort})
+            return config.get(['tor:hashedPassword']);
+        })
+        .then( (hashedPassword)  => {
+            console.log('Start tor...', controlPort, socksPort);
+            return createTorClient({controlPort, socksPort, hashedPassword})
         })
         .then( torClient => {
             /*Якщо процес Тору помер, то закриваємо всього грабера. Все одно він нічого не може зробити без нього*/
@@ -81,8 +73,7 @@ function startTor() {
 
 function systemInit(options) {
 
-    let {user, password, address, port} = options,
-        config;
+    let {user, password, address, port} = options;
 
     console.log('Join to network...');
 
@@ -90,16 +81,15 @@ function systemInit(options) {
         .connect(`amqp://${user}:${password}@${address}:${port}`)
         .then(conn => conn.createChannel())
         .then((ch) => (channel = ch))
-        .then(channel => {
+        .then(() => {
             config = new Config(channel, configQueue);
             config.on('change', () => {
-                restart(channel, config).catch(errorHandler)
+                restart().catch(errorHandler)
             });
             return config.initialize();
         })
-        .then( config => {
+        .then( () => {
             console.log('done');
-            return {config, channel};
         })
         .catch(err => { throw new Error(`AMQP connection fails. Actual error: ${err.message}`, 'AmqpError', {stack: err.stack}) });
 
@@ -108,36 +98,38 @@ function systemInit(options) {
 /**
  * Function which subscribe on worker queue and consume new requests
  *
- * @param options
  * @returns {*}
  */
 
-function start(options) {
-
-    const {channel, config} = options;
+function start() {
 
     console.log('start consumer...');
 
-    return config.get('process:queues:task')
+    let torPassword, responseQueue, UserClass;
+
+    return config.get(['process:queues:task', 'tor:password', 'service:queues:notify', 'databases:redis:options'])
         .then( response => {
 
             /*Зберігаю відповідь у змінній, щоб при зміні конфіга, знати застарілу чергу і відключитись від неї*/
 
-            processQueue = response;
+            processQueue = response[0];
+            torPassword = response[1];
+            responseQueue = response[2];
+
+            UserClass = UserClassFactory(response[3]);
+
             return channel.assertQueue(processQueue);
         })
         .then( q => {
             channel.consume(q.queue, function handleMessage(msg) {
+                if(!msg) return;
                 const options = JSON.parse(msg.content.toString());
                 chain = chain
                     .then( () => {
 
-                        return imitationLifetime(options, {controlPort, torPassword, socksPort, address})
+                        return imitationLifetime(UserClass, options, {controlPort, torPassword, socksPort, address})
                             .then( () => {
                                 networkFailsInRow = 0;
-                                return config.get('service:queues:notify');
-                            })
-                            .then( responseQueue => {
                                 channel.sendToQueue(responseQueue, new Buffer(options._id));
                                 channel.ack(msg);
                             })
@@ -159,11 +151,10 @@ function start(options) {
 /**
  * Function which force spider to stop listening worker queue and refuse new requests
  *
- * @param channel
  * @returns {*}
  */
 
-function stop(channel) {
+function stop() {
     return channel.deleteQueue(processQueue)
         .catch( err => { throw new Error(`AMQP connection fails. Actual error: ${err.message}`, 'AmqpError'); })
 }
@@ -171,13 +162,11 @@ function stop(channel) {
 /**
  * Function which fully restarts tor spider
  *
- * @param channel
- * @param config
  * @returns {*}
  */
 
-function restart(channel, config) {
-    return stop(channel).then(start.bind(null, channel, config))
+function restart() {
+    return stop().then(start)
 }
 
 
@@ -204,12 +193,11 @@ function errorHandler(err) {
         case 'MessageWarn':
             return console.warn('Warning: ', err.message);
         case 'UserError':
-            return err.details.calle(err.details.msg);
         case 'NetworkError':
-            if(networkFailsInRow > 3) return err.details.calle(err.details.msg);
-            return stop(channel)
+            if(++networkFailsInRow <= 5) return err.details.calle(err.details.msg);
+            return stop()
                 .then(checkConnection)
-                .then(start.bind(null, channel))
+                .then(start)
                 .catch(errorHandler);
     }
 
@@ -234,12 +222,13 @@ function errorHandler(err) {
     }
 }
 
-function getFreePort() {
+function getFreePorts(num = 1, ports = []) {
     console.log('start search from', portfinder.basePort);
-    let prom = portfinder.getPortPromise();
+    if(num < 1) return ports;
 
-    return prom.then( port => {
+    return portfinder.getPortPromise().then( port => {
         portfinder.basePort = port + 1;
-        return port;
+        ports.push(port);
+        return getFreePorts(num - 1, ports);
     });
 }
